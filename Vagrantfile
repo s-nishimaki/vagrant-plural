@@ -1,4 +1,3 @@
-## Vagrantfile
 # -*- mode: ruby -*-
 
 Vagrant.configure(2) do |config|
@@ -12,6 +11,14 @@ Vagrant.configure(2) do |config|
 
       c1.vm.provider :libvirt do |domain|
         domain.memory = 2048
+      end
+
+      if machine_id == N
+        c1.vm.provision "ansible" do |ansible|
+          ansible.playbook = "ansible-common/provision/site.yml"
+          ansible.inventory_path = "ansible-common/provision/hosts"
+          ansible.limit = 'all'
+        end
       end
 
     end
